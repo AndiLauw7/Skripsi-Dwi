@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.tentangSekolah {
+    /* background-image: url("./assets/img/logo.png");
+    background-size: cover; */
+    background-color: antiquewhite;
+}
+
+.table {
+    overflow-x: auto;
+}
+
+
+/* 
+.home-admin {
+    background-image: url("./assets/img/panggung-pentas.png");
+    width: 750px;
+} */

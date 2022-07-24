@@ -1,0 +1,9 @@
+body{
+    scroll-margin-block-start: 0;
+    scroll-behavior: smooth;
+}
+
+.dropdwon-toggle::after{
+    display: none !important;
+}
+
