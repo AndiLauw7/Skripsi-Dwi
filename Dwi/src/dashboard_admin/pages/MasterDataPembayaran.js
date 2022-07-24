@@ -14,7 +14,7 @@ import MyTable from "../components/myTable";
 
 const columns = [
   {
-    heading: "Nama Siswa",
+    heading: "Nama Lengkap",
     selector: "registrasi.nama_lengkap",
   },
   {
@@ -159,7 +159,7 @@ const ActComp = (data, setDataId) => {
 export default function MasterDataPembayaran() {
   // const location = useLocation();url={location.pathname}
   return (
-    <MyPage title={"Master Data Pembayaran"}>
+    <MyPage title={"Data Pembayaran"}>
       <MyTable colAct={ActComp} columns={columns} url={"/pembayaran"} />
     </MyPage>
   );

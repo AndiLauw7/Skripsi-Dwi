@@ -117,16 +117,14 @@ export const FormPembayaranEdit = () => {
               </Form>
             </Col>
             <Col md={6} className="text-center">
-              <img
-                src={privew}
-                alt=""
-                style={{
-                  width: "436px",
-                  height: "555px",
-                  // objectFit: "cover",
-                  // borderRadius: "32px",
-                }}
-              />
+              <div>
+                <img
+                  src={privew}
+                  alt=""
+                  width={350}
+                  style={{ borderRadius: "10px" }}
+                />
+              </div>
             </Col>
           </Row>
         </div>

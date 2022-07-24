@@ -16,7 +16,7 @@ import MyTable from "../components/myTable";
 
 const columns = [
   {
-    heading: "Nama Siswa",
+    heading: "Nama Lengkap",
     selector: "registrasi.nama_lengkap",
   },
   {
