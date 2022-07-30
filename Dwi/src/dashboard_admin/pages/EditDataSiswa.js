@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import logo from "../../assets/img/PPDB.jpeg";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API } from "../../configAPI/api";
@@ -32,7 +32,17 @@ export const EditDataSiswa = () => {
   const { id } = useParams();
   const [state, dispatch] = useContext(UserContext);
   const [data, setData] = useState({ ...defValue });
+  const [message, setMassege] = useState(null);
   console.log(data);
+
+  const check = (obj) => {
+    for (const props in obj) {
+      if (obj[props] === "") {
+        console.log("masuk");
+        throw new Error();
+      }
+    }
+  };
 
   const handleChange = (e) => {
     console.log(e.target.name);
@@ -47,7 +57,8 @@ export const EditDataSiswa = () => {
     try {
       e.preventDefault();
       const config = { headers: { "Content-type": "application/json" } };
-      const body = JSON.stringify(data);
+      check(data);
+      const body = JSON.stringify({ ...data, createBy: state.user.id });
       const response = await API.patch(`/registrasi/${id}`, body, config);
       console.log(response);
       if (response.status === 201) {
@@ -55,6 +66,7 @@ export const EditDataSiswa = () => {
       }
     } catch (error) {
       console.log(error);
+      setMassege(true);
     }
   };
 
@@ -79,6 +91,15 @@ export const EditDataSiswa = () => {
             <Row>
               <Col md={6}>
                 <Form>
+                  {message && (
+                    <Alert
+                      variant="danger"
+                      onClose={() => setMassege(false)}
+                      dismissible
+                    >
+                      Data Tidak boleh Kosong
+                    </Alert>
+                  )}
                   <Form.Group
                     className="mb-2"
                     controlId="exampleForm.ControlInput1"
@@ -320,3 +341,14 @@ export const EditDataSiswa = () => {
     </div>
   );
 };
+
+// import React from "react";
+// import { FormRegisterEdit } from "../../components/pages/FormRegisterEdit";
+
+// export const EditDataSiswa = () => {
+//   return (
+//     <div>
+//       <FormRegisterEdit />
+//     </div>
+//   );
+// };

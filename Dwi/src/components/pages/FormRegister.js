@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Footer } from "../navbars/Footer";
 import NavTop from "../navbars/NavTop";
 import logo from "../../assets/img/PPDB.jpeg";
@@ -24,7 +24,7 @@ const defValue = {
   nama_ayah: "",
   tempat_lahirAyah: "",
   pekerjaanAyah: "",
-  createBy: "",
+  // createBy: "",
 };
 
 export const FormRegister = () => {
@@ -35,12 +35,22 @@ export const FormRegister = () => {
 
   const [data, setData] = useState({ ...defValue });
 
+  const [message, setMassege] = useState(null);
+
+  const check = (obj) => {
+    for (const props in obj) {
+      console.log(obj);
+      if (obj[props] === "") {
+        throw new Error();
+      }
+    }
+  };
   const handleChange = (e) => {
     console.log(e.target.name);
     setData({
       ...data,
       [e.target.name]: e.target.value,
-      createBy: state.user.id,
+      // createBy: state.user.id,
     });
   };
 
@@ -48,7 +58,9 @@ export const FormRegister = () => {
     try {
       e.preventDefault();
       const config = { headers: { "Content-type": "application/json" } };
-      const body = JSON.stringify(data);
+
+      const body = JSON.stringify({ ...data, createBy: state.user.id });
+      check(data);
       const response = await API.post("/registrasi/add", body, config);
       console.log(response);
       if (state.user.role === "admin") {
@@ -58,6 +70,7 @@ export const FormRegister = () => {
       }
     } catch (error) {
       console.log(error);
+      setMassege(true);
     }
   };
 
@@ -75,6 +88,15 @@ export const FormRegister = () => {
           <Row>
             <Col md={6}>
               <Form>
+                {message && (
+                  <Alert
+                    variant="danger"
+                    onClose={() => setMassege(false)}
+                    dismissible
+                  >
+                    Data Tidak boleh Kosong
+                  </Alert>
+                )}
                 <Form.Group
                   className="mb-2"
                   controlId="exampleForm.ControlInput1"

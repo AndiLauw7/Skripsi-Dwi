@@ -22,7 +22,7 @@ import { DetailTentangSekolah } from "./components/pages/DetailTentangSekolah";
 //import API
 import { API, setAuthToken } from "./configAPI/api";
 import { DetailFasilitasSekolah } from "./components/pages/DetailFasilitasSekolah";
-import { FormRegisterEdit } from "./components/pages/FormRegisterEdit";
+// import { FormRegisterEdit } from "./components/pages/FormRegisterEdit";
 import { FormPembayaranEdit } from "./components/pages/FormPembayaranEdit";
 import FormUserAdd from "./dashboard_admin/pages/FormUserAdd";
 
@@ -90,11 +90,11 @@ function App() {
         <>
           <Route exact path="/profile/:id" element={<Profile />} />
           <Route exact path="/form-ppdb" element={<FormRegister />} />
-          <Route
+          {/* <Route
             exact
             path="/form-ppdb/edit/:id"
             element={<FormRegisterEdit />}
-          />
+          /> */}
           <Route
             exact
             path="/form-pembayaran/edit/:id"
@@ -117,7 +117,7 @@ function App() {
       <Route exact path="/" element={<Home />} />
       <Route exact path="/profile/:id" element={<Profile />} />
       <Route exact path="/form-ppdb" element={<FormRegister />} />
-      <Route exact path="/form-ppdb/edit/:id" element={<FormRegisterEdit />} />
+      {/* <Route exact path="/form-ppdb/edit/:id" element={<FormRegisterEdit />} /> */}
 
       <Route
         exact

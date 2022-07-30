@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../../configAPI/api";
 import Excel from "../importFile/Excel";
 import moment from "moment";
+import { useReactToPrint } from "react-to-print";
 
 const TableHeading = ({ item, index }) => <th key={index}>{item.heading}</th>;
 
@@ -56,8 +57,9 @@ const MyTable = ({
   nameColExcel,
   dateRangePicker,
   report,
+  expPdf,
 }) => {
-  const ref = useRef();
+  const componentRef = useRef();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
@@ -124,6 +126,12 @@ const MyTable = ({
     console.log(result);
     return result;
   };
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "emp-data",
+    onAfterPrint: () => alert("print succes"),
+  });
 
   const dataSet = [
     {
@@ -235,34 +243,46 @@ const MyTable = ({
             )}
           </div>
         </Col>
+
+        {expPdf && (
+          <div className="d-flex justify-content-end mt-2">
+            <Button onClick={handlePrint}>cetak pdf</Button>
+          </div>
+        )}
       </Row>
 
-      <div className="table">
-        <Table striped bordered hover>
-          <thead style={{ backgroundColor: "#999" }}>
-            <tr>
-              {colNo && <th>No.</th>}
-              {columns.map((item, index) => (
-                <TableHeading key={index} item={item} index={index} />
+      {/* <div ref={componentRef}>
+        <Button onClick={handlePrint}>Cetak Pdf</Button>
+      </div> */}
+      <>
+        <div className="table" ref={componentRef}>
+          <Table striped bordered hover>
+            <thead style={{ backgroundColor: "#999" }}>
+              <tr>
+                {colNo && <th>No.</th>}
+                {columns.map((item, index) => (
+                  <TableHeading key={index} item={item} index={index} />
+                ))}
+                {colAct && <th>action</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <TableRow
+                  colNo={colNo}
+                  colAct={colAct}
+                  key={index}
+                  item={item}
+                  columns={columns}
+                  index={index}
+                  setDataId={setDataId}
+                />
               ))}
-              {colAct && <th>action</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <TableRow
-                colNo={colNo}
-                colAct={colAct}
-                key={index}
-                item={item}
-                columns={columns}
-                index={index}
-                setDataId={setDataId}
-              />
-            ))}
-          </tbody>
-        </Table>
-      </div>
+            </tbody>
+          </Table>
+        </div>
+        {/* <Button onClick={handlePrint}>Cetak Pdf</Button> */}
+      </>
 
       <div className="d-flex justify-content-end align-items-center">
         <Pagination>
@@ -294,6 +314,7 @@ MyTable.prototype = {
   colNo: PropTypes.bool,
   colAct: PropTypes.func,
   expExcel: PropTypes.bool,
+  expPdf: PropTypes.bool,
 };
 
 MyTable.defaultProps = {

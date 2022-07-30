@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Alert } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../../configAPI/api";
 import { Footer } from "../navbars/Footer";
@@ -17,8 +17,9 @@ export const FormPembayaranEdit = () => {
 
   const [form, setForm] = useState({ ...defValue });
   const [privew, setPreview] = useState(null);
+  const [message, setMassege] = useState(false);
 
-  console.log(defValue);
+  console.log(form);
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -42,8 +43,6 @@ export const FormPembayaranEdit = () => {
       };
 
       const formData = new FormData();
-      // formData.set("iduser", state.user.id);
-      // formData.set("id_registrasi", state.tb_registrasi.id);
       formData.set(
         "bukti_pembayaran",
         form.bukti_pembayaran[0],
@@ -51,6 +50,11 @@ export const FormPembayaranEdit = () => {
       );
       formData.set("nama_lengkap", form.nama_lengkap);
 
+      if (!form.nama_lengkap) {
+        throw new Error("coba");
+      }
+
+      // console.log(form.name.length);
       const response = await API.patch(`/pembayaran/${id}`, formData, config);
       console.log(response);
       console.log(formData);
@@ -60,6 +64,7 @@ export const FormPembayaranEdit = () => {
       }
     } catch (error) {
       console.log(error);
+      setMassege(true);
     }
   };
   return (
@@ -78,10 +83,18 @@ export const FormPembayaranEdit = () => {
           <Row>
             <Col md={6}>
               <Form>
+                {message && (
+                  <Alert
+                    variant="danger"
+                    onClose={() => setMassege(false)}
+                    dismissible
+                  >
+                    Data Tidak boleh Kosong
+                  </Alert>
+                )}
                 <Form.Group
                   className="mb-2"
                   controlId="exampleForm.ControlInput1"
-                  required
                 >
                   <Form.Label>Nama Lengkap</Form.Label>
                   <Form.Control
@@ -95,7 +108,6 @@ export const FormPembayaranEdit = () => {
                 <Form.Group
                   className="mb-2"
                   controlId="exampleForm.ControlInput1"
-                  required
                 >
                   <Form.Label>Bukti Pembayaran</Form.Label>
 

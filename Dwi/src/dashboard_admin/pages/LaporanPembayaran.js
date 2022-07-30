@@ -142,6 +142,7 @@ export default function LaporanDataPembayaran() {
         url={"/pembayaran-report"}
         dateRangePicker
         report
+        expPdf
       />
       {/* colAct={ActComp}  */}
     </MyPage>

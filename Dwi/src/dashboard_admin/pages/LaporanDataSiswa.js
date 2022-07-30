@@ -1,8 +1,14 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import ReactToPrint from "react-to-print";
 import { Button } from "react-bootstrap";
 import { RiDeleteBin2Line, RiEdit2Line } from "react-icons/ri";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  renderMatches,
+} from "react-router-dom";
 import Swal from "sweetalert2";
 import { API } from "../../configAPI/api";
 import Excel from "../components/importFile/Excel";
@@ -88,20 +94,50 @@ const ActComp = (data, setDataId) => {
     </div>
   );
 };
-
-export default function MasterDataSiswa() {
-  // const location = useLocation();
-
-  return (
-    <MyPage title={"Laporan Data Peserta Didik"}>
-      <MyTable
-        colAct={ActComp}
-        columns={columns}
-        pathAdd={"/dashboard/tambah-data-siswa"}
-        url={"/registrasi-report"}
-        dateRangePicker
-        report
-      />
-    </MyPage>
-  );
+class MasterDataSiswa extends React.Component {
+  render() {
+    return (
+      <MyPage title={"Laporan Data Peserta Didik"}>
+        <MyTable
+          // colAct={ActComp}
+          columns={columns}
+          // pathAdd={"/dashboard/tambah-data-siswa"}
+          url={"/registrasi-report"}
+          dateRangePicker
+          report
+        />
+      </MyPage>
+    );
+  }
 }
+
+export default MasterDataSiswa;
+// export default function MasterDataSiswa() {
+// const Print = () => {
+//   const componentRef = useRef(null);
+//   const handlePrint = ReactToPrint({
+//     content: () => MasterDataSiswa.current,
+//   });
+
+//   return (
+//     <div>
+//       <MasterDataSiswa ref={(el) => (componentRef = el)} />
+//       <button onClick={handlePrint}>Print</button>
+//     </div>
+//   );
+// };
+// renderMatches(<Print />, document.querySelector("#root"));
+
+//   return (
+//     <MyPage title={"Laporan Data Peserta Didik"}>
+//       <MyTable
+//         colAct={ActComp}
+//         columns={columns}
+//         pathAdd={"/dashboard/tambah-data-siswa"}
+//         url={"/registrasi-report"}
+//         dateRangePicker
+//         report
+//       />
+//     </MyPage>
+//   );
+// }
